@@ -43,7 +43,7 @@ module ActiveModel
 
         def test_serializer_for_not_existing_serializer
           serializer = ActiveModel::Serializer.serializer_for(@model)
-          assert_equal nil, serializer
+          assert_equal ActiveModel::Serializer::DefaultSerializer, serializer
         end
 
         def test_serializer_inherited_serializer

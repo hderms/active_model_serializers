@@ -4,6 +4,7 @@ module ActiveModel
     autoload :Configuration
     autoload :ArraySerializer
     autoload :Adapter
+    autoload :DefaultSerializer
     include Configuration
 
     class << self
@@ -179,6 +180,8 @@ module ActiveModel
         serializer_class
       elsif klass.superclass
         get_serializer_for(klass.superclass)
+      else
+        ActiveModel::Serializer::DefaultSerializer
       end
     end
 

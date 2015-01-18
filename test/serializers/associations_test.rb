@@ -53,7 +53,7 @@ module ActiveModel
             assert_kind_of(ActiveModel::Serializer.config.array_serializer, serializer)
           elsif name == :bio
             assert_equal({}, options)
-            assert_nil serializer
+            assert_kind_of(ActiveModel::Serializer::DefaultSerializer, serializer)
           elsif name == :roles
             assert_equal({embed: :ids}, options)
             assert_kind_of(ActiveModel::Serializer.config.array_serializer, serializer)
@@ -71,7 +71,7 @@ module ActiveModel
             assert_kind_of(PostSerializer, serializer)
           elsif name == :author
             assert_equal({}, options)
-            assert_nil serializer
+            assert_kind_of(ActiveModel::Serializer::DefaultSerializer, serializer)
           else
             flunk "Unknown association: #{name}"
           end

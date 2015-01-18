@@ -102,7 +102,7 @@ module ActiveModel
           else
             options[:fields] = @fieldset && @fieldset.fields_for(serializer)
             result = serializer.attributes(options)
-            result[:id] = result[:id].to_s if result[:id]
+            result[:id] = result[:id].to_s if result && result[:id]
           end
 
           result
