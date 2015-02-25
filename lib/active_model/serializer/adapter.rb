@@ -50,6 +50,10 @@ module ActiveModel
         json[meta_key] = meta if meta && root
         json
       end
+
+      def add_to_root(key, values)
+        @root << {key => values}
+      end
     end
   end
 end
