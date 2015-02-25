@@ -12,7 +12,7 @@ module ActiveModel
               if association.respond_to?(:each)
                 array_serializer = association
                 @result["#{name.singularize}_ids"] = array_serializer.map { |item| item.id }
-                add_to_root(name,  array_serializer.map { |item| item.attributes(opts) }
+                add_to_root(name,  array_serializer.map { |item| item.attributes(opts) })
               else
                 if association
                   @result[name] = association.attributes(options)
