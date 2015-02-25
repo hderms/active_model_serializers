@@ -12,6 +12,7 @@ module ActiveModel
       def initialize(serializer, options = {})
         @serializer = serializer
         @options = options
+        @root = {}
       end
 
       def serializable_hash(options = {})
