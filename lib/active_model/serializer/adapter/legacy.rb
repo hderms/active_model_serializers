@@ -26,9 +26,9 @@ module ActiveModel
                 add_to_root_body(name,  array_serializer.map { |item| item.attributes(opts) })
               else
                 if association
-                  @result[key_name] = association.id
+                  @result[key_name] = Array.wrap(association.id)
 
-                  add_to_root_body(name,  association.attributes)
+                  add_to_root_body(name.to_s.pluralize.to_sym,  association.attributes)
                 else
                   @result[key_name] = []
                 end
