@@ -5,7 +5,7 @@ module ActiveModel
       autoload :Json
       autoload :Null
       autoload :JsonApi
-      autoload :Legacy
+      autoload :Ember
 
       attr_reader :serializer
 
@@ -54,8 +54,12 @@ module ActiveModel
       end
 
       def add_to_root_body(key, values)
-        if @root_body[key].respond_to?(:each)
-          if values.respond_to?(:each)
+        puts "add to root body for #{key}"
+        if @root_body[key].is_a?(Hash)
+          @root_body[key].merge(values)
+        elsif @root_body[key].respond_to?(:each)
+          puts "root body #{@root_body[key]} responds to each"
+          if values.is_a?(Array)
             @root_body[key] += values
           else
             @root_body[key] << values
