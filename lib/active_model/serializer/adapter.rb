@@ -12,7 +12,7 @@ module ActiveModel
       def initialize(serializer, options = {})
         @serializer = serializer
         @options = options
-        @root = {}
+        @root_body = {}
       end
 
       def serializable_hash(options = {})
@@ -53,8 +53,8 @@ module ActiveModel
         json
       end
 
-      def add_to_root(key, values)
-        @root << {key => values}
+      def add_to_root_body(key, values)
+        @root_body.store(key , values)
       end
     end
   end
