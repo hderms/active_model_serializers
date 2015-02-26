@@ -9,8 +9,10 @@ module ActiveModel
             serialized_hashes = serializers.map{|s| s.serializable_hash}
             serialized_results = serializers.map{|s| s.result}
             serialized_roots = serializers.map{|s| s.root_body}
-            serialized_roots.each do |key, value|
-              add_to_root_body(key, value)
+            serialized_roots.each do |root|
+              root.each do |key, value|
+                add_to_root_body(key, value)
+              end
             end
             @result = serialized_results
           else
