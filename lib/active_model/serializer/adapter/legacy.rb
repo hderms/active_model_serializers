@@ -2,22 +2,27 @@ module ActiveModel
   class Serializer
     class Adapter
       class Legacy < Adapter
+        attr_accessor :root_body, :result
         def serializable_hash(options = {})
           if serializer.respond_to?(:each)
-            @result = serializer.map{|s| self.class.new(s).serializable_hash }
+            serializer =  self.class.new(s)
+            serialized_hash = serializer.serializable_hash
+            @result = serializer.map{|s| serializer.result }
+            add_to_root_body(root, serializer.root_body)
           else
             @result = serializer.attributes(options)
 
             serializer.each_association do |name, association, opts|
+              key_name = "#{name.to_s.singularize}_ids".to_sym
               if association.respond_to?(:each)
                 array_serializer = association
-                @result["#{name.to_s.singularize}_ids".to_sym] = array_serializer.map { |item| item.id }
+                @result[key_name] = array_serializer.map { |item| item.id }
                 add_to_root_body(name,  array_serializer.map { |item| item.attributes(opts) })
               else
                 if association
-                  @result[name] = association.attributes(options)
+                  @result[key_name] = association.attributes(options)
                 else
-                  @result[name] = nil
+                  @result[key_name] = nil
                 end
               end
             end
