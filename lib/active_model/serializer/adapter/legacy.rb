@@ -5,10 +5,14 @@ module ActiveModel
         attr_accessor :root_body, :result
         def serializable_hash(options = {})
           if serializer.respond_to?(:each)
-            serializer =  self.class.new(s)
-            serialized_hash = serializer.serializable_hash
-            @result = serializer.map{|s| serializer.result }
-            add_to_root_body(root, serializer.root_body)
+            serializers = serializer.map{|s| self.class.new(s) }
+            serialized_hashes = serializers.map{|s| s.serializable_hash}
+            serialized_results = serializers.map{|s| s.result}
+            serialized_roots = serializers.map{|s| s.root_body}
+            serialized_roots.each do |key, value|
+              add_to_root_body(key, value)
+            end
+            @result = serialized_results
           else
             @result = serializer.attributes(options)
 
