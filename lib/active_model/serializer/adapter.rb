@@ -55,7 +55,11 @@ module ActiveModel
 
       def add_to_root_body(key, values)
         if @root_body[key].respond_to?(:each)
-          @root_body[key] << values
+          if values.respond_to?(:each)
+            @root_body[key] += values
+          else
+            @root_body[key] << values
+          end
         else
           @root_body.store(key , values)
         end
